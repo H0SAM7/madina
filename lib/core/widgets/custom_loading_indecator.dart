@@ -14,7 +14,7 @@ class CustomLoadingIndicator extends StatelessWidget {
       width: w,
       child: LoadingIndicator(
           indicatorType: Indicator.lineScalePulseOut,
-          colors: [orangeColor, Colors.white, orangeColor]),
+          colors: [blueColor, Colors.white, blueColor]),
     ));
   }
 }

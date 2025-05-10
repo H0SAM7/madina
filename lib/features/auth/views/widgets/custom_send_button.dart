@@ -25,9 +25,9 @@ class CustomSendButton extends StatelessWidget {
         width: width ?? 300,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: orangeColor),
+            border: Border.all(color: blueColor),
             // gradient: LinearGradient(colors: mixColors),
-            color: color ?? orangeColor),
+            color: color ?? blueColor),
         child: Center(
           child: Text(
             label,

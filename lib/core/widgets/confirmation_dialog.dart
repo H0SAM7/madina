@@ -18,11 +18,11 @@ Future<void> showCustomDialog(
         backgroundColor: Colors.white,
         title: Text(
           title,
-          style: AppStyles.style18(context).copyWith(
+          style: AppStyles.style18().copyWith(
                 color: Colors.black,
               ),
         ),
-        content: Text(content,style: AppStyles.style18(context).copyWith(
+        content: Text(content,style: AppStyles.style18().copyWith(
                 color: Colors.black,
               ),),
         actions: <Widget>[
@@ -30,7 +30,7 @@ Future<void> showCustomDialog(
             onPressed: onNegativePressed,
             child: Text(
               negativeButtonText,
-              style: AppStyles.style18(context).copyWith(
+              style: AppStyles.style18().copyWith(
                 color: Colors.black,
               ),
             ),
@@ -39,7 +39,7 @@ Future<void> showCustomDialog(
             onPressed: onPositivePressed,
             child: Text(
               positiveButtonText,
-              style: AppStyles.style18(context).copyWith(
+              style: AppStyles.style18().copyWith(
                 color: Colors.black,
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:madina/core/error/dio_failures.dart';
-import 'package:madina/services/api_services.dart';
+import 'package:madina/core/services/api_services.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_state.dart';

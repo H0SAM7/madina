@@ -15,7 +15,7 @@ class CustomEmptyView extends StatelessWidget {
           Assets.imagesNodataCuate,
           fit: BoxFit.cover,
         ),
-        Text(text,style: AppStyles.style32(context, Colors.white),),
+        Text(text,style: AppStyles.style32( Colors.white),),
       ],
     );
   }

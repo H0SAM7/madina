@@ -19,12 +19,12 @@ class HaveAccWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            //   textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
+          
+            style: TextStyle(color: Colors.black),
           ),
           Text(
             action,
-            style: TextStyle(color: orangeColor),
+            style: TextStyle(color: blueColor),
           ),
         ],
       ),

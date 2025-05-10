@@ -29,7 +29,7 @@ void showCustomAlert({
       DialogButton(
         onPressed: onPressed,
         width: 120,
-        color: orangeColor,
+        color: blueColor,
         child: Text(
           actionTitle,
           style: const TextStyle(

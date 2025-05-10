@@ -7,7 +7,7 @@ class LoadingWidgets {
     return Center(
       child: LoadingAnimationWidget.newtonCradle(
         size: size??100,
-        color:color?? orangeColor,
+        color:color?? blueColor,
       ),
     );
   }
@@ -16,7 +16,7 @@ class LoadingWidgets {
     return Center(
       child: LoadingAnimationWidget.threeRotatingDots(
         size:size?? 100,
-        color: orangeColor,
+        color: blueColor,
       ),
     );
   }
@@ -25,7 +25,7 @@ static Widget loadingprogressiveDots({double? size}) {
     return Center(
       child: LoadingAnimationWidget.progressiveDots(
         size:size?? 100,
-        color: orangeColor,
+        color: blueColor,
       ),
     );
   }
@@ -34,7 +34,7 @@ static Widget loadingdotsTriangle({double? size}) {
     return Center(
       child: LoadingAnimationWidget.dotsTriangle(
         size:size?? 100,
-        color: orangeColor,
+        color: blueColor,
       ),
     );
   }

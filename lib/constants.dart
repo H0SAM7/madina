@@ -1,4 +1,4 @@
 import 'package:flutter/material.dart';
 
-Color orangeColor = const Color(0xffFF6A00);
+Color blueColor = const Color.fromARGB(255, 83, 150, 216);
 final String notifiGroup= 'notifiGroup' ;

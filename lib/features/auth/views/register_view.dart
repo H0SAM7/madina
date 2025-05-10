@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:madina/constants.dart';
 import 'package:madina/core/styles/text_styles.dart';
+import 'package:madina/core/utils/assets.dart';
 import 'package:madina/core/widgets/custom_text_field.dart';
 import 'package:madina/features/auth/views/login_view.dart';
 import 'package:madina/features/auth/views/widgets/custom_send_button.dart';
@@ -19,102 +21,80 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String? email, password, phone, fatherPhone, name;
-  bool _isDialogShowing = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-              backgroundColor: Colors.black,
-              body: Form(
-                key: formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                   
-                      SizedBox(
-                        height: 90.h,
-                      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20.h),
 
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Hello! Register to get \nstarted',
-                          style: AppStyles.style22White(context)
-                              .copyWith(fontSize: 25),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      CustomTextFrom(
-                        hint: 'enter name',
-                        label: 'Name',
-                        onChanged: (value) {
-                          name = value;
-                        },
-                      ),
-                      CustomTextFrom(
-                        hint: 'enter email',
-                        label: 'Email',
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
-                      CustomTextFrom(
-                        hint: 'enter password',
-                        label: 'Password',
-                        isPasswordField: true,
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
+              SizedBox(height: 90.h),
 
-                      HaveAccWidget(
-                        title: 'You have Accounts? ',
-                        action: 'Login',
-                        onPressed: () {
-                          Navigator.pushNamed(context, LoginView.id);
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Center(
-                        child: CustomSendButton(
-                          label: 'Sign Up',
-                          onTap: () async {
-                            if (formKey.currentState!.validate()) {
-                              // final user = UserModel(
-                              //   email: email!,
-                              //   password: password!,
-                              //   name: name,
-                              // );
-                              // await BlocProvider.of<AuthCubit>(context)
-                              //     .register(userModel: user);
-
-                              // await FirebaseMessaging.instance
-                              //     .subscribeToTopic(notifiGroup);
-                            }
-                          },
-                        ),
-                      ),
-                 
-                      const SizedBox(
-                        height: 24,
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'مرحبا بك ',
+                  style: AppStyles.style22().copyWith(fontSize: 25),
                 ),
               ),
-            );
-          
-        
-      }
-    
-  
+              const SizedBox(height: 15),
+              CustomTextFrom(
+                icon: Image.asset(Assets.iconsUser, color: blueColor),
+
+                label: "الاسم",
+                hint: 'ادخل اسمك',
+              ),
+              CustomTextFrom(
+                icon: Icon(Icons.email_outlined, color: blueColor),
+                label: "البريد الالكتروني",
+                hint: 'ادخل بريدك الالكتروني',
+                controller: emailController,
+              ),
+              CustomTextFrom(
+                icon: Icon(Icons.lock_outline, color: blueColor),
+                label: 'كلمة المرور',
+                hint: 'ادخل كلمة المرور الخاصة بك',
+                isPasswordField: true,
+                controller: passController,
+              ),
+
+              HaveAccWidget(
+                title: 'هل لديك حساب بالفعل؟  \t ',
+                action: 'تسجيل دخول',
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginView.id);
+                },
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: CustomSendButton(
+                  label: 'أنشاء حساب',
+                  onTap: () async {
+                    if (formKey.currentState!.validate()) {}
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

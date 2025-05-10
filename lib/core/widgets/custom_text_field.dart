@@ -12,6 +12,7 @@ class CustomTextFrom extends StatefulWidget {
     this.isPasswordField = false,
     this.controller,
     this.enabel = true,
+    this.icon,
   });
   final void Function(String)? onChanged;
   final String label, hint;
@@ -20,6 +21,8 @@ class CustomTextFrom extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isPasswordField;
   final TextEditingController? controller;
+  final Widget? icon;
+
   @override
   State<CustomTextFrom> createState() => _CustomTextFromState();
 }
@@ -32,11 +35,16 @@ class _CustomTextFromState extends State<CustomTextFrom> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        keyboardType: TextInputType.multiline,
+
+        minLines: widget.isPasswordField ? 1 : 1,
+        maxLines: widget.isPasswordField ? 1 : null,
         controller: widget.controller,
-        validator: widget.validator ??
+        validator:
+            widget.validator ??
             (value) {
               if (value == null || value.isEmpty) {
-                return 'complete fields';
+                return 'اكمل باقي البيانات بشكل صحيح';
               }
               return null;
             },
@@ -47,11 +55,11 @@ class _CustomTextFromState extends State<CustomTextFrom> {
           focusColor: Colors.black,
           filled: true,
           fillColor: Colors.white,
-          floatingLabelBehavior: FloatingLabelBehavior.never, 
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           label: Text(
             widget.label,
             style: TextStyle(
-              color: orangeColor,
+              color: blueColor,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -59,27 +67,28 @@ class _CustomTextFromState extends State<CustomTextFrom> {
           hintText: widget.hint,
           enabled: widget.enabel ?? true,
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: orangeColor),
+            borderSide: BorderSide(color: blueColor),
             borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           enabledBorder: outlineInputBorder,
           focusedBorder: outlineInputBorder,
-          suffixIcon: widget.isPasswordField
-              ? IconButton(
-                  icon: Icon(
-                    _isObscure ? Icons.visibility : Icons.visibility_off,
-                    color: orangeColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                )
-              : null,
-          hintStyle: const TextStyle(
-            color: Colors.black,
-          ),
+          prefixIcon: widget.icon,
+
+          suffixIcon:
+              widget.isPasswordField
+                  ? IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off,
+                      color: blueColor,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  )
+                  : null,
+          hintStyle: const TextStyle(color: Colors.black),
         ),
       ),
     );

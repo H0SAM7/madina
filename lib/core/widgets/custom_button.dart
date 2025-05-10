@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
           height: 45,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: color ?? orangeColor,
+            color: color ?? blueColor,
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.left,
-                style: AppStyles.style16Gray(context).copyWith(
+                style: AppStyles.style16Gray().copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color:txtColor?? Colors.white,

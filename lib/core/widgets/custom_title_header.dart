@@ -11,9 +11,9 @@ class CustomTitleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppStyles.style22White(
-        context,
-      ),
+      style: AppStyles.style22(
+        
+      )
     );
   }
 }
