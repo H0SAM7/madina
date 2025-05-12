@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:madina/bloc_observer.dart';
 import 'package:madina/core/routes/app_routes.dart';
+import 'package:madina/features/auth/manager/cubit/auth_cubit.dart';
 import 'package:madina/generated/l10n.dart';
 
 void main() async {
@@ -30,32 +31,31 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
-          locale: const Locale('ar'),
-          supportedLocales: const [Locale('ar')],
-          localizationsDelegates: [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
+        return BlocProvider(
+          create: (context) => AuthCubit(),
+          child: MaterialApp(
+            locale: const Locale('ar'),
+            supportedLocales: const [Locale('ar')],
+            localizationsDelegates: [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
 
-          darkTheme: ThemeData.light(),
-          themeMode: ThemeMode.light,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.white,
-           textTheme: GoogleFonts.cairoTextTheme(
-  Theme.of(context).textTheme,
-).apply(
-  bodyColor: Colors.black,
-  displayColor: Colors.black,
-),
-
+            darkTheme: ThemeData.light(),
+            themeMode: ThemeMode.light,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              textTheme: GoogleFonts.cairoTextTheme(
+                Theme.of(context).textTheme,
+              ).apply(bodyColor: Colors.black, displayColor: Colors.black),
+            ),
+            initialRoute: AppRoutes.initialRoute,
+            routes: AppRoutes.routes,
+            onGenerateRoute: AppRoutes.generateRoute,
           ),
-          initialRoute: AppRoutes.initialRoute,
-          routes: AppRoutes.routes,
-          onGenerateRoute: AppRoutes.generateRoute,
         );
       },
     );

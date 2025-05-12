@@ -38,4 +38,12 @@ static Widget loadingdotsTriangle({double? size}) {
       ),
     );
   }
+  static Widget flicker({double? size}) {
+    return Center(
+      child: LoadingAnimationWidget.flickr(
+        size:size?? 100,
+        leftDotColor: blueColor, rightDotColor: const Color(0xFFEA3799),
+      ),
+    );
+  }
 }

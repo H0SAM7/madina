@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:madina/core/widgets/custom_loading_indecator.dart';
+import 'package:madina/core/widgets/loading_widgets.dart';
 
 class CustomProgressHUD extends StatelessWidget {
   final bool inAsyncCall;
@@ -24,9 +24,9 @@ class CustomProgressHUD extends StatelessWidget {
             child: Align(
               alignment: indicatorAlignment,
               child: Container(
-                child: verify
-                    ? const CustomLoadingIndicator()
-                    : const CustomLoadingIndicator(),
+                child: 
+                   LoadingWidgets.flicker()
+                
               ),
             ),
           ),
