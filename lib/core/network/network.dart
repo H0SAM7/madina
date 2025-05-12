@@ -1,4 +1,7 @@
 final String registerBaseUrl = 'https://almadinah.zaha-script.net/api';
 final String token =
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2FkbWluL2xvZ2luIiwiaWF0IjoxNzQ2OTgzMzg4LCJleHAiOjE3NjI1MzUzODgsIm5iZiI6MTc0Njk4MzM4OCwianRpIjoidHJjU1VLZUJycDdodHJEbSIsInN1YiI6IjEiLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.gT-DofkrNT1tJ0IHkyQ83QWA11oQ08TnufUed7vJR-8';
-final loginBaseUrl='https://servicing.zaha-script.net/api';
+final loginBaseUrl = 'https://servicing.zaha-script.net/api';
+
+final temptoken =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FsbWFkaW5haC56YWhhLXNjcmlwdC5uZXQvYXBpL2FkbWluL2xvZ2luIiwiaWF0IjoxNzQ2OTkyOTQ0LCJleHAiOjE3NjI1NDQ5NDQsIm5iZiI6MTc0Njk5Mjk0NCwianRpIjoiYjBOZUpweUZNN3JqeE1nOCIsInN1YiI6IjEiLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.4GVFDZTLl-0JVow4nVMgouUicWpa-s8LTbU7iSFGYUE';

@@ -8,11 +8,28 @@ import 'package:madina/core/services/api_services.dart';
 import 'package:madina/core/utils/local_storage.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/features/auth/manager/cubit/auth_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/cities_list_view.dart';
 
-class CitiesView extends StatelessWidget {
+class CitiesView extends StatefulWidget {
   const CitiesView({super.key});
   static String id = 'CitiesView';
+
+  @override
+  State<CitiesView> createState() => _CitiesViewState();
+}
+
+class _CitiesViewState extends State<CitiesView> {
+  @override
+  void initState() {
+    fetchCities();
+    super.initState();
+  }
+
+  void fetchCities() async {
+    await BlocProvider.of<SuperAdminCubit>(context).getCities(token: temptoken);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +40,21 @@ class CitiesView extends StatelessWidget {
           Expanded(child: CitiesListView()),
           IconButton(
             onPressed: () async {
-              await   BlocProvider.of<AuthCubit>(context).getUserProfile();
-                // try {
-                //   final token = await LocalStorage.getData('token');
-                //   var headers = {
-              
-                //     'Authorization': 'Bearer $token',
-                //   };
-                //   var response = await ApiServices(dio: Dio()).getRequest(
-                //     endPoint: '$loginBaseUrl/admin/user-profile',
-                //     headers: headers,
-                //   );
-                //   log(response.toString());
-                // } catch (e) {
-                //   log(e.toString());
-                // }
-              
+              await BlocProvider.of<AuthCubit>(context).getUserProfile();
+              // try {
+              //   final token = await LocalStorage.getData('token');
+              //   var headers = {
+
+              //     'Authorization': 'Bearer $token',
+              //   };
+              //   var response = await ApiServices(dio: Dio()).getRequest(
+              //     endPoint: '$loginBaseUrl/admin/user-profile',
+              //     headers: headers,
+              //   );
+              //   log(response.toString());
+              // } catch (e) {
+              //   log(e.toString());
+              // }
             },
             icon: Icon(Icons.import_contacts),
           ),

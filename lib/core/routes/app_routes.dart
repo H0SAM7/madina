@@ -15,7 +15,7 @@ abstract class AppRoutes {
   // BottomNavigator.id: (context) => const BottomNavigator(),
 
 
-  static String? initialRoute =  SplashView.id;
+  static String? initialRoute =  AddCity.id;
   
   static Map<String, Widget Function(BuildContext)> routes = {
  //   BottomNavigator.id: (context) => const BottomNavigator(),
