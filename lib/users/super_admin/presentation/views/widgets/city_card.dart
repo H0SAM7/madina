@@ -13,7 +13,7 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, BranchsView.id);
+        Navigator.pushNamed(context, BranchsView.id, arguments: cityModel);
       },
       child: ListTile(
         leading: Text(index.toString(), style: AppStyles.style32(Colors.black)),
@@ -25,7 +25,7 @@ class CityCard extends StatelessWidget {
             style: AppStyles.style16Gray(),
           ),
         ),
-        trailing: Image.asset(Assets.iconsArrow),
+        trailing: Image.asset(Assets.iconsLeftarrow),
         shape: RoundedRectangleBorder(
           side: BorderSide(color: blueColor, width: .3),
           borderRadius: BorderRadius.circular(12),

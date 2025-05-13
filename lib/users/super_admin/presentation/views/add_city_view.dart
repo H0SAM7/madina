@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:madina/core/network/network.dart';
+import 'package:madina/core/utils/functions/vaildtor.dart';
 import 'package:madina/core/widgets/confirmation_dialog.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/core/widgets/custom_progress_hud.dart';
@@ -45,19 +46,21 @@ class _AddCityState extends State<AddCity> {
       listener: (context, state) {
         if (state is Success) {
           Navigator.pushReplacementNamed(context, CitiesView.id);
+
+          clearData();
         } else if (state is Failure) {
           showCustomDialog(
             context,
             title: 'خطأ',
             content: state.errmessage,
             positiveButtonText: 'حسنا',
-            negativeButtonText: "الغاء",
+         //   negativeButtonText: "",
             onPositivePressed: () {
               Navigator.of(context, rootNavigator: true).pop();
             },
-            onNegativePressed: () {
-              Navigator.of(context, rootNavigator: true).pop();
-            },
+            // onNegativePressed: () {
+            //   Navigator.of(context, rootNavigator: true).pop();
+            // },
           );
 
           log(state.errmessage);
@@ -90,6 +93,9 @@ class _AddCityState extends State<AddCity> {
                       label: "اسم المدينة",
                       hint: "ادخل اسم المدينة",
                       controller: _nameController,
+                      validator: (value) {
+                        return nameVaildtor(value);
+                      },
                     ),
 
                     SizedBox(height: 20.h),
@@ -105,8 +111,6 @@ class _AddCityState extends State<AddCity> {
                             token: temptokenadd,
                             name: _nameController.text,
                           );
-
-                          clearData();
                         }
                       },
                     ),

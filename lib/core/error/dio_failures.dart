@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 abstract class Failure {
@@ -10,6 +12,9 @@ class ServerFailure extends Failure {
   ServerFailure({super.errMessage});
 
   factory ServerFailure.fromDioException(DioException dioException) {
+    if (dioException.error is SocketException) {
+      return ServerFailure(errMessage: 'لا يوجد اتصال بالإنترنت.');
+    }
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
         return ServerFailure(errMessage: 'انتهت مهلة الاتصال.');
@@ -21,14 +26,18 @@ class ServerFailure extends Failure {
         return ServerFailure(errMessage: 'انتهت مهلة استلام الاستجابة.');
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-            dioException.response!.statusCode, dioException.response!.data);
+          dioException.response!.statusCode,
+          dioException.response!.data,
+        );
       case DioExceptionType.cancel:
-         return ServerFailure(
-            errMessage: 'تم إلغاء الطلب إلى خادم API.');
+        return ServerFailure(errMessage: 'تم إلغاء الطلب إلى خادم API.');
       case DioExceptionType.unknown:
-        if (dioException.message!.contains('SocketException')) {
+        if (dioException.message != null &&
+            (dioException.message!.contains('SocketException') ||
+                dioException.message!.contains('Network is unreachable'))) {
           return ServerFailure(errMessage: 'لا يوجد اتصال بالإنترنت.');
         }
+
         return ServerFailure(errMessage: 'حدث خطأ غير معروف.');
       default:
         return ServerFailure(errMessage: 'حدث خطأ غير متوقع.');
@@ -39,11 +48,14 @@ class ServerFailure extends Failure {
     // Handle specific status codes
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(
-          errMessage: _extractErrorMessage(response) ??
-              'طلب غير صالح أو فشل في المصادقة.');
+        errMessage:
+            _extractErrorMessage(response) ??
+            'طلب غير صالح أو فشل في المصادقة.',
+      );
     } else if (statusCode == 404) {
       return ServerFailure(
-          errMessage:  'لم يتم العثور على الطلب. الرجاء المحاولة لاحقاً!');
+        errMessage: 'لم يتم العثور على الطلب. الرجاء المحاولة لاحقاً!',
+      );
     } else if (statusCode == 422) {
       // Paymob-specific: Handling validation errors
       final errors = response['errors'] as Map<String, dynamic>?;
@@ -51,14 +63,18 @@ class ServerFailure extends Failure {
         return ServerFailure(errMessage: errors.values.first.join(', '));
       }
       return ServerFailure(
-          errMessage: _extractErrorMessage(response) ?? "فشلت عملية التحقق");
+        errMessage: _extractErrorMessage(response) ?? "فشلت عملية التحقق",
+      );
     } else if (statusCode == 500) {
       return ServerFailure(
-          errMessage: 'خطأ في الخادم الداخلي. الرجاء المحاولة لاحقاً.');
+        errMessage: 'خطأ في الخادم الداخلي. الرجاء المحاولة لاحقاً.',
+      );
     } else {
       return ServerFailure(
-          errMessage: _extractErrorMessage(response) ??
-              'عذراً! حدث خطأ. الرجاء المحاولة مرة أخرى.');
+        errMessage:
+            _extractErrorMessage(response) ??
+            'عذراً! حدث خطأ. الرجاء المحاولة مرة أخرى.',
+      );
     }
   }
 
@@ -66,7 +82,14 @@ class ServerFailure extends Failure {
     if (response == null) return null;
 
     if (response is Map<String, dynamic>) {
-      const commonKeys = ['message', 'msg', 'error', 'errors', 'detail', 'info'];
+      const commonKeys = [
+        'message',
+        'msg',
+        'error',
+        'errors',
+        'detail',
+        'info',
+      ];
       for (var key in commonKeys) {
         if (response.containsKey(key)) {
           final value = response[key];

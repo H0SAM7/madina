@@ -7,14 +7,21 @@ final class SuperAdminInitial extends SuperAdminState {}
 
 final class Loading extends SuperAdminState {}
 
-final class Success extends SuperAdminState {}
+final class Success extends SuperAdminState {
+
+
+}
 
 final class CitySuccess extends SuperAdminState {
   final List<CityModel> cities;
 
   CitySuccess({required this.cities});
 }
+final class BranchsSuccess extends SuperAdminState {
+  final List<BranchModel> branchs;
 
+  BranchsSuccess({required this.branchs});
+}
 final class Failure extends SuperAdminState {
   final String errmessage;
 

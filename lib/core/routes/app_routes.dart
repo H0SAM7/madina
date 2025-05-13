@@ -1,44 +1,56 @@
-
 import 'package:flutter/material.dart';
-import 'package:madina/core/utils/local_storage.dart';
 import 'package:madina/features/auth/views/login_view.dart';
 import 'package:madina/features/auth/views/register_view.dart';
 import 'package:madina/splash.dart';
+import 'package:madina/users/super_admin/data/models/city_model.dart';
 import 'package:madina/users/super_admin/presentation/views/add_branch_view.dart';
 import 'package:madina/users/super_admin/presentation/views/add_city_view.dart';
 import 'package:madina/users/super_admin/presentation/views/add_trip_view.dart';
+import 'package:madina/users/super_admin/presentation/views/admin_view.dart';
 import 'package:madina/users/super_admin/presentation/views/branchs_view.dart';
+import 'package:madina/users/super_admin/presentation/views/cities_mangment_view.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
+import 'package:madina/users/super_admin/presentation/views/edit_city_view.dart';
 
 abstract class AppRoutes {
   //     BottomNavigator
   // BottomNavigator.id: (context) => const BottomNavigator(),
 
 
-  static String? initialRoute =  AddCity.id;
+  static String? initialRoute =  AdminView.id;
   
   static Map<String, Widget Function(BuildContext)> routes = {
  //   BottomNavigator.id: (context) => const BottomNavigator(),
+      AdminView.id: (context) => const AdminView(),
+
+
+
       LoginView.id: (context) => const LoginView(),
       RegisterView.id: (context) => const RegisterView(),
+     CitiesMangmentView.id: (context) => const CitiesMangmentView(),
 
      AddCity.id: (context) => const AddCity(),
-     AddBranchView.id: (context) => const AddBranchView(),
      CitiesView.id: (context) => const CitiesView(),
-     BranchsView.id: (context) => const BranchsView(),
+
      AddTripView.id: (context) => const AddTripView(),
      SplashView.id: (context) => const SplashView(),
+     EditCityView.id: (context) => const EditCityView(),
 
     //navigation bar #########
     
   };
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case HotelDetailsView.id:
-      //   final properties = settings.arguments as Properties;
-      //   return MaterialPageRoute(
-      //     builder: (context) => HotelDetailsView(hotel: properties),
-      //   );
+           case BranchsView.id:
+        final cityModel = settings.arguments;
+        return MaterialPageRoute(
+          builder: (context) => BranchsView(cityModel: cityModel as CityModel),
+        );
+ case AddBranchView.id:
+        final cityModel = settings.arguments;
+        return MaterialPageRoute(
+          builder: (context) => AddBranchView(cityModel: cityModel as CityModel),
+        );
       // case BookConfirmation.id:
       //   final args = settings.arguments as Map<String, dynamic>;
       //   final bookOrder = args['hotelBookModel'] as HotelBookModel;

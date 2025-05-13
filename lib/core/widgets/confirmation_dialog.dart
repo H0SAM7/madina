@@ -6,9 +6,9 @@ Future<void> showCustomDialog(
   required String title,
   required String content,
   required String positiveButtonText,
-  required String negativeButtonText,
+   String?  negativeButtonText,
   required VoidCallback onPositivePressed,
-  required VoidCallback onNegativePressed,
+   VoidCallback? onNegativePressed,
 }) async {
   showDialog(
     context: context,
@@ -29,7 +29,7 @@ Future<void> showCustomDialog(
           TextButton(
             onPressed: onNegativePressed,
             child: Text(
-              negativeButtonText,
+              negativeButtonText??"",
               style: AppStyles.style18().copyWith(
                 color: Colors.black,
               ),

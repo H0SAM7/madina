@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:madina/users/super_admin/data/models/branch_model.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
 import 'package:madina/users/super_admin/data/repos/super_repo_impl.dart';
 import 'package:madina/users/super_admin/data/sources/super_remote_data_source.dart';
@@ -9,9 +10,12 @@ import 'package:meta/meta.dart';
 part 'super_admin_state.dart';
 
 class SuperAdminCubit extends Cubit<SuperAdminState> {
-  SuperRepoImpl _superRepoImpl = SuperRepoImpl(
+  final SuperRepoImpl _superRepoImpl = SuperRepoImpl(
     superRemoteDataSource: SuperRemoteDataSourceImpl(),
   );
+
+  List<CityModel> cities = [];
+  List<BranchModel> branchs=[];
   SuperAdminCubit() : super(SuperAdminInitial());
   Future<void> getCities({required String token}) async {
     emit(Loading());
@@ -24,8 +28,9 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
       },
       (data) {
         log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
-
-        emit(CitySuccess(cities: data));
+        cities.addAll(data);
+        // emit(CitySuccess(cities: data));
+            emit(Success());
       },
     );
   }
@@ -42,6 +47,74 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
         log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
 
         emit(Success());
+      },
+    );
+  }
+
+  Future<void> updateCity({
+    required String token,
+    required String newName,
+    required int id,
+  }) async {
+    emit(Loading());
+    final data = await _superRepoImpl.updateCity(
+      token: token,
+      newName: newName,
+      id: id,
+    );
+    data.fold(
+      (failure) {
+        log(failure.errMessage.toString());
+        emit(Failure(errmessage: failure.errMessage.toString()));
+      },
+      (data) {
+        log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
+
+        emit(Success());
+      },
+    );
+  }
+
+  Future<void> addBranch({
+    required int id,
+    required String token,
+    required String name,
+    required String address,
+  }) async {
+    emit(Loading());
+    final data = await _superRepoImpl.addBranch(
+      token: token,
+      name: name,
+      address: address,
+      id: id,
+    );
+    data.fold(
+      (failure) {
+        log(failure.errMessage.toString());
+        emit(Failure(errmessage: failure.errMessage.toString()));
+      },
+      (data) {
+        log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
+
+        emit(Success());
+      },
+    );
+  }
+
+  Future<void> getBranches({required String token}) async {
+    emit(Loading());
+    final data = await _superRepoImpl.getBranches(token: token);
+
+    data.fold(
+      (failure) {
+        log(failure.errMessage.toString());
+        emit(Failure(errmessage: failure.errMessage.toString()));
+      },
+      (data) {
+        log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
+        branchs.addAll(data);
+
+        emit(Success( ));
       },
     );
   }

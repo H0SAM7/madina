@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:madina/core/widgets/custom_err_view.dart';
 import 'package:madina/core/widgets/loading_widgets.dart';
-import 'package:madina/users/super_admin/data/models/city_model.dart';
+import 'package:madina/users/super_admin/data/models/branch_model.dart';
 import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
-import 'package:madina/users/super_admin/presentation/views/widgets/city_card.dart';
+import 'package:madina/users/super_admin/presentation/views/widgets/branch_card.dart';
 
-class CitiesListView extends StatelessWidget {
-  const CitiesListView({super.key});
+class BranchListView extends StatelessWidget {
+  const BranchListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SuperAdminCubit, SuperAdminState>(
       builder: (context, state) {
         if (state is Success) {
-      List<CityModel>  cities =   BlocProvider.of<SuperAdminCubit>(context).cities;
+          List<BranchModel> branchs =
+              BlocProvider.of<SuperAdminCubit>(context).branchs;
+
           return ListView.builder(
-            itemCount: cities.length,
+            itemCount: branchs.length,
             itemBuilder: (context, ind) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: CityCard(index: ind + 1, cityModel: cities[ind]),
+                child: BranchCard(index: ind + 1, branchModel: branchs[ind]),
               );
             },
           );
