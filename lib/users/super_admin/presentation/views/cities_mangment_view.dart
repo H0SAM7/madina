@@ -15,16 +15,15 @@ class CitiesMangmentView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomAppBar(
-            title: 'ادارة المدن والفروع',
-           
-          ),
+          CustomAppBar(title: 'ادارة المدن والفروع'),
           SettingContainer(
             child: Column(
               children: [
                 ItemSetting(
-                  onTap: () {
+                  onTap: () async {
+             
                     Navigator.pushNamed(context, CitiesView.id);
+               
                   },
                   leading: Image.asset(
                     Assets.iconsBrach,
@@ -35,8 +34,6 @@ class CitiesMangmentView extends StatelessWidget {
                   title: 'المدن والفروع',
                 ),
                 Divider(endIndent: 12, indent: 6, thickness: .6),
-               
-
               ],
             ),
           ),

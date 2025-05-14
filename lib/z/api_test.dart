@@ -48,7 +48,7 @@ class PlaceListScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, LoginView.id);
                 }
                 final result = apiServices.postRequest(
-                  endPoint: '$registerBaseUrl/admin/showAll/city',
+                  endPoint: '$baseUrl/admin/showAll/city',
                   headers: {'Authorization': 'Bearer $token'},
                   data: {"name": 'name'},
                 );

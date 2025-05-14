@@ -4,7 +4,6 @@ import 'package:madina/constants.dart';
 import 'package:madina/core/utils/assets.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_mangment_view.dart';
-import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/item_setting.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/setting_container.dart';
 

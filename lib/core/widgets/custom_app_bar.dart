@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:madina/constants.dart';
 import 'package:madina/core/styles/text_styles.dart';
 import 'package:madina/core/utils/assets.dart';
 
@@ -24,13 +25,15 @@ class CustomAppBar extends StatelessWidget {
                   },
               child: Transform.rotate(
                 angle: 3.14159,
-                child: Image.asset(Assets.iconsBack, color: Colors.black,height: 24.h,width: 24.w,),
+                child: Image.asset(Assets.iconsBack, color: blue2,height: 24.h,width: 24.w,),
               ),
             ):SizedBox(),
           
              SizedBox(width: 30.w),
             title != null
-                ? Text(title!, style: AppStyles.style22())
+                ? Text(title!, style: AppStyles.style22().copyWith(
+                  color: blue2
+                ))
                 : SizedBox(),
             const Spacer(),
             widget ?? const SizedBox(),

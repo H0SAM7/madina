@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 class ApiServices {
@@ -18,6 +20,8 @@ class ApiServices {
       ),
       queryParameters: queryParameters,
     );
+        log(endPoint);
+
     return response.data;
   }
 
@@ -35,6 +39,27 @@ class ApiServices {
 
       options: Options(headers: headers,),
     );
+        log(endPoint);
+
     return response.data;
   }
+
+
+  Future<Map<String, dynamic>> patchRequest({
+  required String endPoint,
+  Map<String, dynamic>? data,
+  Map<String, dynamic>? queryParameters,
+  Map<String, dynamic>? headers,
+}) async {
+ 
+    Response response = await dio.patch(
+      endPoint,
+      data: data,
+      queryParameters: queryParameters,
+      options: Options(headers: headers),
+    );
+    log('PATCH $endPoint');
+    return response.data;
+ 
+}
 }

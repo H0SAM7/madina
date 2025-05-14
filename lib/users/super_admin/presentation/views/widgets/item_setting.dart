@@ -1,4 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:madina/constants.dart';
 import 'package:madina/core/styles/text_styles.dart';
 import 'package:madina/core/utils/assets.dart';
 
@@ -31,7 +32,7 @@ class ItemSetting extends StatelessWidget {
           trailing: trailing ??
               Image.asset(
                 Assets.iconsLeftarrow,
-                color: Colors.black,
+                color: blue2,
                 height: 20.h,
               ),
         ),

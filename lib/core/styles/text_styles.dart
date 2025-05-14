@@ -31,7 +31,7 @@ abstract class AppStyles {
   ) {
     return  TextStyle(
         fontSize: 20.sp,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w400,
         color: Colors.black);
   }
 

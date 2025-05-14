@@ -21,7 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthLoading());
       final response = await _apiServices.postRequest(
-        endPoint: '$registerBaseUrl$registerUrl',
+        endPoint: '$baseUrl$registerUrl',
         data: data,
         headers: {'Accept': 'application/json'},
       );

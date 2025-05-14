@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:madina/constants.dart';
 import 'package:madina/core/network/network.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
@@ -8,28 +9,12 @@ import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_
 import 'package:madina/users/super_admin/presentation/views/add_branch_view.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/branch_list_view.dart';
 
-class BranchsView extends StatefulWidget {
+class BranchsView extends StatelessWidget {
   const BranchsView({super.key, required this.cityModel});
   static const String id = 'BranchsView';
 
   final CityModel cityModel;
 
-  @override
-  State<BranchsView> createState() => _BranchsViewState();
-}
-
-class _BranchsViewState extends State<BranchsView> {
-  @override
-  void initState() {
-    fetchBranchs();
-    super.initState();
-  }
-
-  void fetchBranchs() async {
-    await BlocProvider.of<SuperAdminCubit>(
-      context,
-    ).getBranches(token: temptoken);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +28,11 @@ class _BranchsViewState extends State<BranchsView> {
                 Navigator.pushNamed(
                   context,
                   AddBranchView.id,
-                  arguments: widget.cityModel,
+                  arguments: cityModel,
                 );
+               
               },
-              icon: Icon(Icons.add, size: 25.w),
+              icon: Icon(Icons.add, size: 25.w,color: blue2,),
             ),
           ),
 

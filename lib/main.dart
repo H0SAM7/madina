@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:madina/bloc_observer.dart';
+import 'package:madina/core/network/network.dart';
 import 'package:madina/core/routes/app_routes.dart';
 import 'package:madina/features/auth/manager/cubit/auth_cubit.dart';
 import 'package:madina/generated/l10n.dart';
@@ -14,10 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = SimpleBlocObserever();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((_) {
+  SystemChrome.setPreferredOrientations([]).then((_) {
     runApp(MyApp());
   });
 }
@@ -35,7 +33,14 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => AuthCubit()),
-            BlocProvider(create: (context) => SuperAdminCubit(), lazy: true),
+            BlocProvider(
+              create:
+                  (context) =>
+                      SuperAdminCubit()
+                        ..getBranches(token: temptoken)
+                        ..getCities(token: temptoken),
+              lazy: true,
+            ),
           ],
           child: MaterialApp(
             locale: const Locale('ar'),

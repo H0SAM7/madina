@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:madina/users/super_admin/data/models/branch_model.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
+import 'package:madina/users/super_admin/data/models/job_title_model.dart';
 import 'package:madina/users/super_admin/data/repos/super_repo_impl.dart';
 import 'package:madina/users/super_admin/data/sources/super_remote_data_source.dart';
 import 'package:meta/meta.dart';
@@ -15,7 +16,11 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
   );
 
   List<CityModel> cities = [];
-  List<BranchModel> branchs=[];
+  List<BranchModel> branchs = [];
+  List<JobTitleModel> jobTitles = [];
+
+  String? currentAction;
+
   SuperAdminCubit() : super(SuperAdminInitial());
   Future<void> getCities({required String token}) async {
     emit(Loading());
@@ -28,9 +33,12 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
       },
       (data) {
         log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
-        cities.addAll(data);
+        if (cities.isEmpty) {
+          cities = data;
+        }
+
         // emit(CitySuccess(cities: data));
-            emit(Success());
+        emit(Success());
       },
     );
   }
@@ -60,7 +68,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
     final data = await _superRepoImpl.updateCity(
       token: token,
       newName: newName,
-      id: id,
+      cityid: id,
     );
     data.fold(
       (failure) {
@@ -86,7 +94,7 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
       token: token,
       name: name,
       address: address,
-      id: id,
+      branchId: id,
     );
     data.fold(
       (failure) {
@@ -112,10 +120,64 @@ class SuperAdminCubit extends Cubit<SuperAdminState> {
       },
       (data) {
         log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
-        branchs.addAll(data);
+        if (branchs.isEmpty) {
+          branchs = data;
+        }
 
-        emit(Success( ));
+        emit(Success());
       },
     );
+  }
+
+  Future<void> addJobTitle({
+    required String token,
+    required String name,
+    required int branchId,
+  }) async {
+    emit(Loading());
+    final data = await _superRepoImpl.addJobTitle(
+      token: token,
+      name: name,
+      branchId: branchId,
+    );
+    data.fold(
+      (failure) {
+        log(failure.errMessage.toString());
+        emit(Failure(errmessage: failure.errMessage.toString()));
+      },
+      (data) {
+        log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
+
+        emit(Success());
+      },
+    );
+  }
+
+  Future<void> getJobtitles({
+    required String token,
+    required int branchId,
+  }) async {
+    if (jobTitles.isEmpty) {
+      emit(Loading());
+      final data = await _superRepoImpl.getJobtitles(
+        token: token,
+        branchId: branchId,
+      );
+
+      data.fold(
+        (failure) {
+          log(failure.errMessage.toString());
+          emit(Failure(errmessage: failure.errMessage.toString()));
+        },
+        (data) {
+          log('@@@@@@@@@@@@@@@@@@@@${data.toString()}');
+          if (jobTitles.isEmpty) {
+            jobTitles = data.data;
+          }
+
+          emit(Success());
+        },
+      );
+    }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:madina/core/utils/functions/vaildtor.dart';
-import 'package:madina/core/utils/local_storage.dart';
 import 'package:madina/core/widgets/confirmation_dialog.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/core/widgets/custom_progress_hud.dart';
@@ -13,15 +12,15 @@ import 'package:madina/features/auth/views/widgets/custom_send_button.dart';
 import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
 
-class EditCityView extends StatefulWidget {
-  const EditCityView({super.key});
-  static const String id = 'EditCityView';
+class EditBranchView extends StatefulWidget {
+  const EditBranchView({super.key});
+  static const String id = 'EditBranchView';
 
   @override
-  State<EditCityView> createState() => _EditCityState();
+  State<EditBranchView> createState() => _EditCityState();
 }
 
-class _EditCityState extends State<EditCityView> {
+class _EditCityState extends State<EditBranchView> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
 
@@ -37,7 +36,7 @@ class _EditCityState extends State<EditCityView> {
       listener: (context, state) {
         final cubit = context.read<SuperAdminCubit>();
 
-        if (state is Success && cubit.currentAction == 'updateCity') {
+        if (state is Success && cubit.currentAction != 'updateCity') {
           Navigator.pushReplacementNamed(context, CitiesView.id);
           cubit.currentAction = null;
         } else if (state is Failure) {
@@ -50,7 +49,7 @@ class _EditCityState extends State<EditCityView> {
             onPositivePressed: () {
               Navigator.of(context, rootNavigator: true).pop();
             },
-          
+           
           );
 
           log(state.errmessage);
@@ -58,6 +57,7 @@ class _EditCityState extends State<EditCityView> {
       },
 
       builder: (context, state) {
+  
         return CustomProgressHUD(
           inAsyncCall: state is Loading,
           child: AbsorbPointer(
@@ -95,10 +95,9 @@ class _EditCityState extends State<EditCityView> {
                         final temptokenadd =
                             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FsbWFkaW5haC56YWhhLXNjcmlwdC5uZXQvYXBpL2FkbWluL2xvZ2luIiwiaWF0IjoxNzQ2OTkyOTQ0LCJleHAiOjE3NjI1NDQ5NDQsIm5iZiI6MTc0Njk5Mjk0NCwianRpIjoiYjBOZUpweUZNN3JqeE1nOCIsInN1YiI6IjEiLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.4GVFDZTLl-0JVow4nVMgouUicWpa-s8LTbU7iSFGYUE';
                         if (_formKey.currentState!.validate()) {
-                       
                           context.read<SuperAdminCubit>().currentAction =
                               'updateCity';
-                         
+
                           await BlocProvider.of<SuperAdminCubit>(
                             context,
                           ).updateCity(

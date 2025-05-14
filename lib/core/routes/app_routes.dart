@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:madina/features/auth/views/login_view.dart';
 import 'package:madina/features/auth/views/register_view.dart';
 import 'package:madina/splash.dart';
+import 'package:madina/users/super_admin/data/models/branch_model.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
 import 'package:madina/users/super_admin/presentation/views/add_branch_view.dart';
 import 'package:madina/users/super_admin/presentation/views/add_city_view.dart';
 import 'package:madina/users/super_admin/presentation/views/add_trip_view.dart';
 import 'package:madina/users/super_admin/presentation/views/admin_view.dart';
+import 'package:madina/users/super_admin/presentation/views/branch_details_view.dart';
 import 'package:madina/users/super_admin/presentation/views/branchs_view.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_mangment_view.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
+import 'package:madina/users/super_admin/presentation/views/edit_branch_view.dart';
 import 'package:madina/users/super_admin/presentation/views/edit_city_view.dart';
+
+import '../../z/test_screen.dart';
 
 abstract class AppRoutes {
   //     BottomNavigator
@@ -21,6 +26,8 @@ abstract class AppRoutes {
   
   static Map<String, Widget Function(BuildContext)> routes = {
  //   BottomNavigator.id: (context) => const BottomNavigator(),
+      TestScreen.id: (context) => const TestScreen(),
+
       AdminView.id: (context) => const AdminView(),
 
 
@@ -35,6 +42,7 @@ abstract class AppRoutes {
      AddTripView.id: (context) => const AddTripView(),
      SplashView.id: (context) => const SplashView(),
      EditCityView.id: (context) => const EditCityView(),
+     EditBranchView.id: (context) => const EditBranchView(),
 
     //navigation bar #########
     
@@ -50,6 +58,11 @@ abstract class AppRoutes {
         final cityModel = settings.arguments;
         return MaterialPageRoute(
           builder: (context) => AddBranchView(cityModel: cityModel as CityModel),
+        );
+         case BranchDetailsView.id:
+        final branchModel = settings.arguments;
+        return MaterialPageRoute(
+          builder: (context) => BranchDetailsView(branchModel: branchModel as BranchModel),
         );
       // case BookConfirmation.id:
       //   final args = settings.arguments as Map<String, dynamic>;
@@ -76,3 +89,5 @@ abstract class AppRoutes {
     }
   }
 }
+
+
