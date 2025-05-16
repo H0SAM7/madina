@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:madina/core/widgets/custom_err_view.dart';
 import 'package:madina/core/widgets/loading_widgets.dart';
 import 'package:madina/users/super_admin/data/models/branch_model.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/branchs/cubit/branchs_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/branch_card.dart';
 
 class BranchListView extends StatelessWidget {
@@ -11,11 +12,11 @@ class BranchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SuperAdminCubit, SuperAdminState>(
+    return BlocBuilder<BranchsCubit, BranchsState>(
       builder: (context, state) {
-        if (state is Success) {
+        if (state is BranchSuccess) {
           List<BranchModel> branchs =
-              BlocProvider.of<SuperAdminCubit>(context).branchs;
+              BlocProvider.of<BranchsCubit>(context).branchs;
 
           return ListView.builder(
             itemCount: branchs.length,
@@ -26,9 +27,9 @@ class BranchListView extends StatelessWidget {
               );
             },
           );
-        } else if (state is Loading) {
+        } else if (state is BranchLoading) {
           return Center(child: LoadingWidgets.flicker());
-        } else if (state is Failure) {
+        } else if (state is BranchFailure) {
           return CustomErrView(errMessage: state.errmessage);
         } else {
           return SizedBox();

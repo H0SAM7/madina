@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:madina/constants.dart';
+import 'package:madina/core/styles/text_styles.dart';
 import 'package:madina/core/utils/assets.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_mangment_view.dart';
@@ -13,6 +14,13 @@ class AdminView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('مستشار المدينة', style: AppStyles.style20(),),
+      //   elevation: 0,
+      //    shadowColor: Colors.transparent,
+      //   // backgroundColor: Colors.transparent,
+      //   centerTitle: true,
+      // ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
@@ -32,7 +40,7 @@ class AdminView extends StatelessWidget {
                   ),
                   title: 'ادارة الفروع والمدن',
                 ),
-                Divider(endIndent: 12, indent: 6, thickness: .6,),
+                Divider(endIndent: 12, indent: 6, thickness: .6),
                 ItemSetting(leading: Icon(Icons.add), title: 'title'),
               ],
             ),

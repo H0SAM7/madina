@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:madina/constants.dart';
+import 'package:madina/core/network/network.dart';
 import 'package:madina/core/utils/assets.dart';
 import 'package:madina/core/widgets/custom_app_bar.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/item_setting.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/setting_container.dart';
@@ -21,9 +24,10 @@ class CitiesMangmentView extends StatelessWidget {
               children: [
                 ItemSetting(
                   onTap: () async {
-             
                     Navigator.pushNamed(context, CitiesView.id);
-               
+                    await BlocProvider.of<SuperAdminCubit>(
+                      context,
+                    ).getCities(token: temptoken);
                   },
                   leading: Image.asset(
                     Assets.iconsBrach,

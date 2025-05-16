@@ -10,7 +10,7 @@ import 'package:madina/core/widgets/custom_progress_hud.dart';
 import 'package:madina/core/widgets/custom_text_field.dart';
 import 'package:madina/features/auth/views/widgets/custom_send_button.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/branchs/cubit/branchs_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
 
 class AddBranchView extends StatefulWidget {
@@ -37,12 +37,12 @@ class _AddBranchViewState extends State<AddBranchView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SuperAdminCubit, SuperAdminState>(
+    return BlocConsumer<BranchsCubit, BranchsState>(
       listener: (context, state) {
-        if (state is Success) {
+        if (state is BranchSuccess) {
           Navigator.pushReplacementNamed(context, CitiesView.id);
           clearData();
-        } else if (state is Failure) {
+        } else if (state is BranchFailure) {
           showCustomDialog(
             context,
             title: 'خطأ',
@@ -62,10 +62,10 @@ class _AddBranchViewState extends State<AddBranchView> {
       },
       builder: (context, state) {
         return CustomProgressHUD(
-          inAsyncCall: state is Loading,
+          inAsyncCall: state is BranchLoading,
 
           child: AbsorbPointer(
-            absorbing: state is Loading,
+            absorbing: state is BranchLoading,
             child: Scaffold(
               backgroundColor: Colors.white,
               body: Form(
@@ -96,7 +96,7 @@ class _AddBranchViewState extends State<AddBranchView> {
                         if (_formKey.currentState!.validate()) {
                           final tmp =
                               "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FsbWFkaW5haC56YWhhLXNjcmlwdC5uZXQvYXBpL2FkbWluL2xvZ2luIiwiaWF0IjoxNzQ2OTkyOTQ0LCJleHAiOjE3NjI1NDQ5NDQsIm5iZiI6MTc0Njk5Mjk0NCwianRpIjoiYjBOZUpweUZNN3JqeE1nOCIsInN1YiI6IjEiLCJwcnYiOiJkZjg4M2RiOTdiZDA1ZWY4ZmY4NTA4MmQ2ODZjNDVlODMyZTU5M2E5In0.4GVFDZTLl-0JVow4nVMgouUicWpa-s8LTbU7iSFGYUE";
-                          await BlocProvider.of<SuperAdminCubit>(
+                          await BlocProvider.of<BranchsCubit>(
                             context,
                           ).addBranch(
                             token: tmp,

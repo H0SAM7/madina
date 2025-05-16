@@ -9,7 +9,14 @@ import 'package:madina/core/network/network.dart';
 import 'package:madina/core/routes/app_routes.dart';
 import 'package:madina/features/auth/manager/cubit/auth_cubit.dart';
 import 'package:madina/generated/l10n.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/branchs/cubit/branchs_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/jobs/cubit/jobs_cubit.dart';
+
+
+
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +42,10 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => AuthCubit()),
             BlocProvider(
               create:
-                  (context) =>
-                      SuperAdminCubit()
-                        ..getBranches(token: temptoken)
-                        ..getCities(token: temptoken),
-              lazy: true,
+                  (context) => BranchsCubit()..getBranches(token: temptoken),
             ),
+            BlocProvider(create: (context) => SuperAdminCubit(), lazy: true),
+            BlocProvider(create: (context) => JobsCubit(), lazy: true),
           ],
           child: MaterialApp(
             locale: const Locale('ar'),

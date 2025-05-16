@@ -45,6 +45,7 @@ abstract class SuperRemoteDataSource {
     required String token,
     required String name,
     required int branchId,
+    required int jobID,
   });
 
   Future<JobTitleResponse> activeJobTitle({
@@ -152,17 +153,7 @@ class SuperRemoteDataSourceImpl extends SuperRemoteDataSource {
     return (result['message']);
   }
 
-  @override
-  Future<JobTitleResponse> activeJobTitle({
-    required String token,
-    required String jobId,
-  }) {
-    // TODO: implement activeJobTitle
-    throw UnimplementedError();
-  }
-
-
-//////////////////////
+  //////////////////////
 
   @override
   Future<JobTitleResponse> getJobtitles({
@@ -179,17 +170,29 @@ class SuperRemoteDataSourceImpl extends SuperRemoteDataSource {
     return data;
   }
 
+  @override
+  Future<JobTitleResponse> activeJobTitle({
+    required String token,
+    required String jobId,
+  }) async {
+    final result = await apiServices.patchRequest(
+      endPoint: '$baseUrl/admin/active/title/$jobId',
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return JobTitleResponse.fromJson(result);
+  }
 
-
-
-////////////////////////
+  ////////////////////////
   @override
   Future<JobTitleResponse> notActiveJobTitle({
     required String token,
     required String jobId,
-  }) {
-    // TODO: implement notActiveJobTitle
-    throw UnimplementedError();
+  }) async {
+    final result = await apiServices.patchRequest(
+      endPoint: '$baseUrl/admin/notActive/title/$jobId',
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return JobTitleResponse.fromJson(result);
   }
 
   @override
@@ -197,9 +200,15 @@ class SuperRemoteDataSourceImpl extends SuperRemoteDataSource {
     required String token,
     required String name,
     required int branchId,
-  }) {
-    // TODO: implement updateJobTitle
-    throw UnimplementedError();
+    required int jobID,
+  }) async {
+    final result = await apiServices.postRequest(
+      endPoint: '$baseUrl/admin/update/title/1$jobID',
+      headers: {'Authorization': 'Bearer $token'},
+      data: {"name": name},
+    );
+    log('job updated$result');
+    return JobTitleResponse.fromJson(result);
   }
 
   // @override

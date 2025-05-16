@@ -126,8 +126,11 @@ class SuperRepoImpl extends SuperRepo {
     required int branchId,
   }) async {
     try {
-      String jobTitleResponse = await superRemoteDataSource
-          .addJobTitle(token: token, name: name, branchId: branchId);
+      String jobTitleResponse = await superRemoteDataSource.addJobTitle(
+        token: token,
+        name: name,
+        branchId: branchId,
+      );
 
       return right(jobTitleResponse);
     } catch (e) {
@@ -152,16 +155,14 @@ class SuperRepoImpl extends SuperRepo {
   Future<Either<Failure, JobTitleResponse>> getJobtitles({
     required String token,
     required int branchId,
-  }) async{
- try {
-     JobTitleResponse jobTitleResponse = await superRemoteDataSource.getJobtitles(
-        token: token,
-        branchId: branchId,
-      );
+  }) async {
+    try {
+      JobTitleResponse jobTitleResponse = await superRemoteDataSource
+          .getJobtitles(token: token, branchId: branchId);
+          log(jobTitleResponse.toString());
       return right(jobTitleResponse);
     } catch (e) {
       return handleError(e);
-
     }
   }
 
@@ -188,8 +189,22 @@ class SuperRepoImpl extends SuperRepo {
     required String token,
     required String name,
     required int branchId,
-  }) {
-    // TODO: implement updateJobTitle
-    throw UnimplementedError();
+    required int jobID,
+  }) async {
+    try {
+      final jobTitle = await superRemoteDataSource.updateJobTitle(
+        token: token,
+        name: name,
+        branchId: branchId,
+        jobID: jobID,
+      );
+
+      return right(jobTitle);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(errMessage: e.toString()));
+    }
   }
 }

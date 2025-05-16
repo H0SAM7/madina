@@ -27,6 +27,7 @@ void showCustomBottomSheetWithConfirmation({
   );
 }
 
+
 void showCustomBottomSheetWithoutConfirmation({
   required BuildContext context,
   required String title,
@@ -42,10 +43,89 @@ void showCustomBottomSheetWithoutConfirmation({
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
-      return _BottomSheetWithoutConfirmation(title: title, content: content);
+      return DraggableScrollableSheet(
+        initialChildSize: 0.5, // Initial height (50% of screen)
+        minChildSize: 0.2, // Minimum height (20% of screen)
+        maxChildSize: 0.95, // Maximum height (95% of screen)
+        expand: false,
+        builder: (context, scrollController) {
+          return _BottomSheetWithoutConfirmation(
+            title: title,
+            content: content,
+            scrollController: scrollController,
+          );
+        },
+      );
     },
   );
 }
+
+class _BottomSheetWithoutConfirmation extends StatelessWidget {
+  final String title;
+  final Widget content;
+  final ScrollController scrollController;
+
+  const _BottomSheetWithoutConfirmation({
+    required this.title,
+    required this.content,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Add drag handle
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+              //  margin: EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.black),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 8.h),
+            content,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
 
 class _BottomSheetWithConfirmation extends StatelessWidget {
   final String title;
@@ -129,51 +209,6 @@ class _BottomSheetWithConfirmation extends StatelessWidget {
             content,
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _BottomSheetWithoutConfirmation extends StatelessWidget {
-  final String title;
-  final Widget content;
-
-  const _BottomSheetWithoutConfirmation({
-    required this.title,
-    required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 16,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
-              IconButton(
-                icon: Icon(Icons.close, color: Colors.black),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the sheet directly
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          content,
-        ],
       ),
     );
   }

@@ -13,7 +13,8 @@ import 'package:madina/core/widgets/custom_button.dart';
 import 'package:madina/core/widgets/custom_loading_indecator.dart';
 import 'package:madina/core/widgets/custom_text_field.dart';
 import 'package:madina/users/super_admin/data/models/branch_model.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/jobs/cubit/jobs_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/item_setting.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/job_title_card.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/job_title_list_view.dart';
@@ -43,8 +44,8 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
     super.initState();
   }
 
-  void getTitles()async {
-   await  BlocProvider.of<SuperAdminCubit>(
+  void getTitles() async {
+    await BlocProvider.of<JobsCubit>(
       context,
     ).getJobtitles(token: temptoken, branchId: widget.branchModel.id);
   }
@@ -96,9 +97,9 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
                     confirmationMessage: 'هل تريد فعلاً إغلاق إلاعدادات ',
                     content: Form(
                       key: _formKey,
-                      child: BlocListener<SuperAdminCubit, SuperAdminState>(
+                      child: BlocListener<JobsCubit, JobsState>(
                         listener: (context, state) {
-                          if (state is Success) {
+                          if (state is JobsSuccess) {
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -111,7 +112,7 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
                               ),
                             );
                             _jobNameController.clear();
-                          } else if (state is Failure) {
+                          } else if (state is JobsFailure) {
                             showCustomDialog(
                               context,
                               title: 'خطأ',
@@ -145,19 +146,21 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
                             ),
                             CustomButton(
                               title: 'انشاء',
-                              onTap:
-                                  () async => {
-                                    if (_formKey.currentState!.validate())
-                                      {
-                                        await BlocProvider.of<SuperAdminCubit>(
-                                          context,
-                                        ).addJobTitle(
-                                          token: temptoken,
-                                          name: _jobNameController.text,
-                                          branchId: widget.branchModel.id,
-                                        ),
-                                      },
-                                  },
+                              onTap: () async {
+                                final jobs = BlocProvider.of<JobsCubit>(
+                                  context,
+                                );
+                                final titles = jobs.jobTitles;
+                                if (_formKey.currentState!.validate()) {
+                                  await jobs.addJobTitle(
+                                    token: temptoken,
+                                    name: _jobNameController.text,
+                                    branchId: widget.branchModel.id,
+                                  );
+                                  titles.clear();
+                                  getTitles();
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -170,7 +173,7 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
                 leading: Icon(Icons.list_alt_sharp, color: blue2),
                 title: "الاستعلام عن الوظائف في الفرع",
                 onTap: () {
-                  final titles = BlocProvider.of<SuperAdminCubit>(context).jobTitles;
+                  final titles = BlocProvider.of<JobsCubit>(context).jobTitles;
                   showCustomBottomSheetWithoutConfirmation(
                     context: context,
 
@@ -179,7 +182,10 @@ class _BranchDetailsViewState extends State<BranchDetailsView> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(height: 400, child: JobTitleListView()),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          child: JobTitleListView(),
+                        ),
                       ],
                     ),
                   );

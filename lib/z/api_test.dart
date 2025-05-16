@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:madina/core/network/network.dart';
@@ -43,17 +44,12 @@ class PlaceListScreen extends StatelessWidget {
           Center(
             child: IconButton(
               onPressed: () async {
-                final token = await LocalStorage.getData('token');
-                if (token == null || await isTokenExpired(token)) {
-                  Navigator.pushReplacementNamed(context, LoginView.id);
-                }
-                final result = apiServices.postRequest(
-                  endPoint: '$baseUrl/admin/showAll/city',
-                  headers: {'Authorization': 'Bearer $token'},
-                  data: {"name": 'name'},
+                final result = await apiServices.postRequest(
+                  endPoint: '$baseUrl/admin/update/title/15',
+                  headers: {'Authorization': 'Bearer $temptoken'},
+                  // data: {"name": name},
                 );
-                final city = CityModel.fromJson(result as Map<String, dynamic>);
-                log(city.toString());
+                log('job updated$result');
 
                 // final Map<String, dynamic>
                 // result = await apiServices.getRequest(

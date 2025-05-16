@@ -1,4 +1,5 @@
-import 'dart:convert';
+
+
 class JobTitleResponse {
   List<JobTitleModel> data;
   String message;
@@ -88,30 +89,41 @@ class JobTitleModel {
 }
 
 class ChangedData {
-  ChangeField creationDate;
-  ChangeField creationDateHijri;
-  ChangeField status;
+  ChangeField? creationDate;
+  ChangeField? creationDateHijri;
+  ChangeField? status;
+  ChangeField? branchId;
 
   ChangedData({
-    required this.creationDate,
-    required this.creationDateHijri,
-    required this.status,
+    this.creationDate,
+    this.creationDateHijri,
+    this.status,
+    this.branchId,
   });
 
-  factory ChangedData.fromJson(String jsonString) {
-    final Map<String, dynamic> json = jsonDecode(jsonString);
+  factory ChangedData.fromJson(Map<String, dynamic> json) {
     return ChangedData(
-      creationDate: ChangeField.fromJson(json['creationDate']),
-      creationDateHijri: ChangeField.fromJson(json['creationDateHijri']),
-      status: ChangeField.fromJson(json['status']),
+      creationDate: json['creationDate'] != null
+          ? ChangeField.fromJson(json['creationDate'])
+          : null,
+      creationDateHijri: json['creationDateHijri'] != null
+          ? ChangeField.fromJson(json['creationDateHijri'])
+          : null,
+      status:
+          json['status'] != null ? ChangeField.fromJson(json['status']) : null,
+      branchId: json['branch_id'] != null
+          ? ChangeField.fromJson(json['branch_id'])
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'creationDate': creationDate.toJson(),
-      'creationDateHijri': creationDateHijri.toJson(),
-      'status': status.toJson(),
+      if (creationDate != null) 'creationDate': creationDate!.toJson(),
+      if (creationDateHijri != null)
+        'creationDateHijri': creationDateHijri!.toJson(),
+      if (status != null) 'status': status!.toJson(),
+      if (branchId != null) 'branch_id': branchId!.toJson(),
     };
   }
 }
@@ -127,8 +139,8 @@ class ChangeField {
 
   factory ChangeField.fromJson(Map<String, dynamic> json) {
     return ChangeField(
-      old: json['old'],
-      new_: json['new'],
+      old: json['old'].toString(),
+      new_: json['new'].toString(),
     );
   }
 

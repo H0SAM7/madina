@@ -15,7 +15,7 @@ class CustomErrView extends StatelessWidget {
           Assets.imagesErr,
           fit: BoxFit.cover,
         ),
-        Text(errMessage,style: AppStyles.style32( Colors.black),),
+        Text(errMessage,style: AppStyles.style22( ),),
       ],
     );
   }

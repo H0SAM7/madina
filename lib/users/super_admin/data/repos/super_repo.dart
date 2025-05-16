@@ -48,10 +48,13 @@ abstract class SuperRepo {
     required String token,
     required int branchId,
   });
+
+
   Future<Either<Failure, JobTitleResponse>> updateJobTitle({
     required String token,
     required String name,
     required int branchId,
+        required int jobID,
   });
 
   Future<Either<Failure, JobTitleResponse>> activeJobTitle({

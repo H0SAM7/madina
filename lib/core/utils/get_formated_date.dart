@@ -48,5 +48,5 @@ String _getMonthName(int month) {
     hour = hour % 12 == 0 ? 12 : hour % 12;
     String formattedTime = '$hour:${minute.toString().padLeft(2, '0')} $period';
 
-    return '$datePart\n$formattedTime'; // Display date and time on separate lines
+    return '$datePart\n'; // Display date and time on separate lines
   }

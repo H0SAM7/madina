@@ -10,7 +10,7 @@ import 'package:madina/core/widgets/custom_app_bar.dart';
 import 'package:madina/core/widgets/custom_progress_hud.dart';
 import 'package:madina/core/widgets/custom_text_field.dart';
 import 'package:madina/features/auth/views/widgets/custom_send_button.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/add_branch_view.dart';
 import 'package:madina/users/super_admin/presentation/views/cities_view.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/cities_drop_down.dart';

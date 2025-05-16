@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:madina/core/widgets/custom_err_view.dart';
 import 'package:madina/core/widgets/loading_widgets.dart';
 import 'package:madina/users/super_admin/data/models/city_model.dart';
-import 'package:madina/users/super_admin/presentation/manager/cubit/super_admin_cubit.dart';
+import 'package:madina/users/super_admin/presentation/manager/cities/super_admin_cubit.dart';
 import 'package:madina/users/super_admin/presentation/views/widgets/city_card.dart';
 
 class CitiesListView extends StatelessWidget {
@@ -12,6 +12,7 @@ class CitiesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SuperAdminCubit, SuperAdminState>(
+ 
       builder: (context, state) {
         if (state is Success) {
       List<CityModel>  cities =   BlocProvider.of<SuperAdminCubit>(context).cities;
